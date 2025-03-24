@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #aeb7e9;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: auto;
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #error_message {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="text-center">
+        <h1>Signup Page</h1>
+      </div>
+
+      <div id="error_message" class="alert alert-danger" role="alert">
+        Error Message!
+      </div>
+
+      <form id="form_signup">
+        <div class="form-group">
+          <label for="usr">Full Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="FullName"
+            name="name"
+            placeholder="Enter your Full Name"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="Email"
+            name="email"
+            aria-describedby="emailHelp"
+            placeholder="Enter your Email"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password1"
+            id="Password1"
+            placeholder="Enter your Password"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="exampleInputPassword2">Re-Enter Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password2"
+            id="Password2"
+            placeholder="Re-Enter your Password"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="role"
+            value="patient"
+            id="patient"
+            checked
+          />
+          <label class="form-check-label" for="patient"> Patient </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="role"
+            value="therapist"
+            id="therapist"
+          />
+          <label class="form-check-label" for="therapist"> Therapist </label>
+        </div>        
+        <br />
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
+      </form>
+      <div class="text-center">
+        <br />
+        Already have an account?
+        <a href="/login">Log In</a>
+      </div>
+    </div>
+
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script>
+      document.getElementById('form_signup').onsubmit = function(event) {
+        event.preventDefault();
+
+        var name = document.getElementById('FullName').value;
+        var email = document.getElementById('Email').value;
+        var password1 = document.getElementById('Password1').value;
+        var password2 = document.getElementById('Password2').value;
+        var role = document.querySelector('input[name="role"]:checked').value;
+
+        var data = {
+          name: name,
+          email: email,
+          password1: password1,
+          password2: password2,
+          role: role
+        };
+
+        var res = user_signup(data);
+
+        if (res.hasOwnProperty('id')) {
+          window.location.href = '/login';
+        } else {
+          document.getElementById('error_message').innerHTML = res.responseJSON.message;
+          document.getElementById('error_message').style.display = 'block';
+          window.scrollTo(0, 0);
+        }
+
+      };
+    </script>
+  </body>
+</html>

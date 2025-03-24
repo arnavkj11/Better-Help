@@ -1,0 +1,23 @@
+<header>
+    <nav class="navbar navbar-light" style="background-color: #4b4b4b">
+        <div class="container-fluid">
+            <!--<a class="navbar-brand" href="#">My Therapy</a>-->
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="/therapists">Therapists</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+
+            <div class="text-center">
+                {% if user %}
+                    <a href="/profile" class="btn btn-primary">Profile</a>
+                    <a href="/logout" class="btn btn-danger">Logout</a>
+                {% else %}
+                    <a href="/signup" class="btn btn-primary">Register</a>
+                    <a href="/login" class="btn btn-primary">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        nav ul {
+            list-style: none;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        nav li {
+            display: inline;
+            margin: auto;
+            margin-right: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .input-group {
+            width: 30%;
+            margin: auto;
+            margin-top: 5px;
+        }
+
+        .hero {
+            background-image: url("hero-image.jpg");
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            color: #3b3b3b;
+            background-color: #aeb7e9;
+            padding: 172px 0;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .value-prop {
+            background-color: #bc9fa4;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .value-prop h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #4b4b4b;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 90px;
+        }
+
+        footer ul {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        footer li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* responsive  page*/
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 0;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .cta-button {
+                padding: 8px 16px;
+            }
+
+            .input-group {
+                width: 50%;
+            }
+        }
+    </style>
+    {% block styles %}{% endblock %}
+</head>
+
+<body>
+    {% include 'header.html' %}
+
+    {% block body %}{% endblock %}
+
+    <!-- {% include 'footer.html' %} -->
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/main.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
