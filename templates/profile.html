@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% block title %}
+Profile
+{% endblock %}
+
+{% block styles %}
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #aeb7e9;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#patient_profile {
+  display: none;
+}
+
+#therapist_profile {
+  display: none;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container" id="patient_profile">
+  <div class="text-center">
+    <h1>Patient's Profile</h1>
+  </div>
+  </br>
+  <form>
+    <!-- display a small profile photo with link -->
+    <div class="text-center">
+      <a href="" target="_blank" id="patient_profile_image_link">
+        <img src="" alt="Profile Photo" id="patient_profile_image" width="100" height="100">
+      </a>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="patient_display_name">Name: </label>
+      <span id="patient_display_name"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="patient_dob">Date of Birth: </label>
+      <span id="patient_dob"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="patient_gender">Gender: </label>
+      <span id="patient_gender"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="patient_contact_info">Contact Information: </label>
+      <span id="patient_contact_info"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="patient_emerg_contact_info">Emergency Contact Information: </label>
+      <span id="patient_emerg_contact_info"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="patient_med_his">Medical History: </label>
+      <span id="patient_med_his"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="patient_insurance">Insurance Information: </label>
+      <span id="patient_insurance"></span>
+    </div>
+    </br>
+    <div class="text-center">
+      <a class="btn btn-sm btn-primary" href="/profile/edit">Edit Profile</a>
+    </div>
+  </form>
+
+</div>
+
+
+<div class="container" id="therapist_profile">
+  <div class="text-center">
+    <h1>Therapist's Profile</h1>
+  </div>
+  </br>
+  <form>
+    <!-- display a small profile photo with link -->
+    <div class="text-center">
+      <a href="" id="therapist_profile_image_link" target="_blank">
+        <img src="" id="therapist_profile_image"" alt="Profile Photo" width="100" height="100">
+      </a>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="therapist_display_name">Name: </label>
+      <span id="therapist_display_name"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="therapist_dob">Date of Birth: </label>
+      <span id="therapist_dob"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="therapist_gender">Gender: </label>
+      <span id="therapist_gender"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="therapist_contact_info">Contact Information: </label>
+      <span id="therapist_contact_info"></span>
+    </div>
+  </br>
+  <div class="form-label-group">
+    <label for="office_address">Office Address: </label>
+    <span id="office_address">{{ user.profile.office_address or '---' }}</span>
+  </div>
+</br>
+<div class="form-label-group">
+  <label for="meeting_link">Online Meeting Link: </label>
+  <span id="meeting_link"></span>
+</div>
+    </br>
+    <div class="form-label-group">
+      <label for="license">License/Certification: </label>
+      <span id="license"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="specialization">Specialization: </label>
+      <span id="specialization"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="experience">Experience(in years): </label>
+      <span id="experience"></span>
+    </div>
+    </br>
+    <div class="form-label-group">
+      <label for="bio">Bio/Description: </label>
+      <span id="bio"></span>
+    </div>
+    </br>
+    <div class="text-center mb-50">
+      <a class="btn btn-sm btn-primary" href="/profile/edit">Edit Profile</a>
+    </div>
+  </form>
+
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  let user = get_user();
+  let profile = user.profile;
+
+  let profile_link = profile.photo;
+  // check if it starts with /
+  if (!profile_link.startsWith("/")) {
+    profile_link = "/" + profile_link;
+  }
+  
+  // patient
+  if (profile.hasOwnProperty("insurance_info")) {
+    document.getElementById("patient_profile").style.display = "block";
+
+    // display profile photo
+    document.getElementById("patient_profile_image_link").href = profile_link;
+    document.getElementById("patient_profile_image").src = profile_link;
+
+    // display name
+    document.getElementById("patient_display_name").innerHTML = user.name;
+
+    // display date of birth
+    document.getElementById("patient_dob").innerHTML = profile.dob || "---";
+
+    // diplay patient gender
+    document.getElementById("patient_gender").innerHTML = profile.gender || "---";
+
+    // display contact information
+    document.getElementById("patient_contact_info").innerHTML = profile.contact_info || "---";
+
+    // display emergency contact information
+    document.getElementById("patient_emerg_contact_info").innerHTML = profile.emergency_contact_info || "---";
+
+    // display medical history
+    document.getElementById("patient_med_his").innerHTML = profile.medical_history || "---";
+
+    // display patient_insurance information
+    document.getElementById("patient_insurance").innerHTML = profile.insurance_info || "---";
+  } else if (profile.hasOwnProperty("office_address")) {
+    // therapist
+    document.getElementById("therapist_profile").style.display = "block";
+
+    // display profile photo
+    document.getElementById("therapist_profile_image_link").href = profile_link;
+    document.getElementById("therapist_profile_image").src = profile_link;
+
+    // display name
+    document.getElementById("therapist_display_name").innerHTML = user.name;
+
+    // display date of birth
+    document.getElementById("therapist_dob").innerHTML = profile.dob || "---";
+
+    // display therapist gender
+    document.getElementById("therapist_gender").innerHTML = profile.gender || "---";
+
+    // display contact information
+    document.getElementById("therapist_contact_info").innerHTML = profile.contact_info || "---";
+
+    // display office address
+    document.getElementById("office_address").innerHTML = profile.office_address || "---";
+
+    // display meeting link
+    document.getElementById("meeting_link").innerHTML = profile.meeting_link || "---";
+
+    // display license
+    document.getElementById("license").innerHTML = profile.license_info || "---";
+
+    // display specialization
+    document.getElementById("specialization").innerHTML = profile.speciality || "---";
+
+    // display experience
+    document.getElementById("experience").innerHTML = profile.experience || "---";
+
+    // display bio
+    document.getElementById("bio").innerHTML = profile.bio || "---";
+  } else {
+    // error
+    alert("Error: Invalid profile");
+  }
+
+</script>
+{% endblock %}

@@ -1,0 +1,313 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Profile
+{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #aeb7e9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: auto;
+        margin-top: 10px;
+        margin-bottom: 100px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #patient_profile {
+        display: none;
+    }
+
+    #therapist_profile {
+        display: none;
+    }
+
+    #patient_current_photo {
+        display: none;
+    }
+
+    #therapist_current_photo {
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container" id="patient_profile">
+    <div class="text-center">
+        <h3>Patient's Profile</h3>
+    </div>
+    </br>
+    <form id="form_patient_profile" enctype="multipart/form-data">
+        <input id="patient_user_id" type="text" name="user_id" hidden>
+        <div class="form-label-group">
+            <label for="patient_display_name">Name: </label>
+            <span id="patient_display_name"></span>
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="patient_dob">Date of Birth: </label>
+            <input name="dob" type="date" id="patient_dob" class="form-control" autofocus>
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="patient_gender">Gender: </label>
+            <select name="gender" id="patient_gender">
+                <option value="">Choose Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="patient_photo">Profile Photo: </label>
+            <input type="hidden" name="patient_photo_changed" id="patient_photo_changed">
+            <input name="photo" type="file" id="patient_photo" class="form-control" accept="image/*">
+            <!-- Current Photo / Delete Photo -->
+            <button class="btn btn-sm btn-danger mt-1" type="button" onclick="clearPhoto()">Clear Photo</button>
+
+            <a id="patient_current_photo" href="" target="_blank" class="btn btn-sm btn-primary mt-1">View Current
+                Photo</a>
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="patient_contact_info">Contact Information: </label>
+            <input type="text" name="contact_info" id="patient_contact_info" class="form-control"
+                placeholder="Enter your contact information">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="patient_emerg_contact_info">Emergency Contact Information: </label>
+            <input name="emergency_contact_info" type="text" id="patient_emerg_contact_info" class="form-control"
+                placeholder="Enter your emergency contact information">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="patient_medical_history">Medical History: </label>
+            <input type="text" name="medical_history" id="patient_medical_history" class="form-control"
+                placeholder="Write your medical history">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="patient_insurance_info">Insurance Information: </label>
+            <input type="text" name="insurance_info" id="patient_insurance_info" class="form-control"
+                placeholder="Enter your insurance information">
+        </div>
+        </br>
+        <div class="text-center">
+            <button class="btn btn-sm btn-primary" type="submit">Save Profile</button>
+        </div>
+    </form>
+
+</div>
+
+<div class="container" id="therapist_profile">
+    <div class="text-center">
+        <h1>Therapist's Profile</h1>
+    </div>
+    </br>
+    <form id="form_therapist_profile" enctype="multipart/form-data">
+        <input type="text" name="user_id" id="therapist_user_id" hidden>
+        <div class="form-label-group">
+            <label for="therapist_display_name">Name: </label>
+            <span id="therapist_display_name"></span>
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_dob">Date of Birth: </label>
+            <input name="dob" type="date" id="therapist_dob" class="form-control">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_gender">Gender: </label>
+            <select name="gender" id="therapist_gender">
+                <option value="">Choose Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_photo">Profile Photo: </label>
+            <input type="hidden" name="therapist_photo_changed" id="therapist_photo_changed">
+            <input name="photo" type="file" id="therapist_photo" class="form-control" accept="image/*">
+            <!-- Current Photo / Delete Photo -->
+            <button class="btn btn-sm btn-danger mt-1" type="button" onclick="clearPhoto()">Clear Photo</button>
+
+            <a id="therapist_current_photo" href="" target="_blank" class="btn btn-sm btn-primary mt-1">View Current
+                Photo</a>
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_contact_info">Contact Information: </label>
+            <input name="contact_info" type="text" id="therapist_contact_info" class="form-control"
+                placeholder="Enter your contact information">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_office_address">Office Address: </label>
+            <input name="office_address" type="text" id="therapist_office_address" class="form-control"
+                placeholder="Enter your office address">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_meeting_link">Online Meeting Link: </label>
+            <input name="meeting_link" type="text" id="therapist_meeting_link" class="form-control"
+                placeholder="Enter your online meeting link.">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_license_info">License/Certification: </label>
+            <input name="license_info" type="text" id="therapist_license_info" class="form-control"
+                placeholder="Enter your license/certification">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_speciality">Specialization: </label>
+            <input name="speciality" type="text" id="therapist_speciality" class="form-control"
+                placeholder="Enter your specialization">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_experience">Experience(in years): </label>
+            <input name="experience" type="number" id="therapist_experience" class="form-control"
+                placeholder="Enter your experience">
+        </div>
+        </br>
+        <div class="form-label-group">
+            <label for="therapist_bio">Bio/Description: </label>
+            <input name="bio" type="text" id="therapist_bio" class="form-control"
+                placeholder="Write your bio/description">
+        </div>
+        </br>
+        <div class="text-center">
+            <button class="btn btn-sm btn-primary" type="submit">Save Profile</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function clearPhoto() {
+        document.getElementById('patient_photo').value = null;
+        document.getElementById('therapist_photo').value = null;
+        document.getElementById('patient_photo_changed').value = true;
+        document.getElementById('therapist_photo_changed').value = true;
+        alert('Photo cleared.');
+    }
+
+    function setOptionSelected(selectElement, optionValue) {
+        selectElement.value = optionValue;
+        for (var i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].value === optionValue) {
+                selectElement.selectedIndex = i;
+                break;
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        let user = get_user();
+        let profile = user.profile;
+
+        // set user id
+        document.getElementById('patient_user_id').value = user.id;
+        document.getElementById('therapist_user_id').value = user.id;
+
+        // set display name
+        document.getElementById('patient_display_name').innerHTML = user.name;
+        document.getElementById('therapist_display_name').innerHTML = user.name;
+
+        // set current photo
+        if (profile.photo) {
+            if (!profile.photo.startsWith("/")) {
+                profile.photo = "/" + profile.photo;
+            }
+            document.getElementById('patient_current_photo').href = profile.photo;
+            document.getElementById('patient_current_photo').style.display = 'inline-block';
+            document.getElementById('therapist_current_photo').href = profile.photo;
+            document.getElementById('therapist_current_photo').style.display = 'inline-block';
+        }
+        if (user.is_patient) {
+            // patient
+            document.getElementById('patient_photo').addEventListener('change', function () {
+                document.getElementById('patient_photo_changed').value = true;
+            });
+
+            // initialize form
+            document.getElementById('patient_dob').value = profile.dob;
+            setOptionSelected(document.getElementById('patient_gender'), profile.gender);
+            document.getElementById('patient_insurance_info').value = profile.insurance_info;
+            document.getElementById('patient_medical_history').value = profile.medical_history;
+            document.getElementById('patient_emerg_contact_info').value = profile.emergency_contact_info;
+            document.getElementById('patient_contact_info').value = profile.contact_info;
+
+            document.getElementById('patient_profile').style.display = 'block';
+
+            document.getElementById('form_patient_profile').onsubmit = function (event) {
+                event.preventDefault();
+                let data = new FormData($('#form_patient_profile')[0]);
+                let res = edit_user_profile(data);
+                
+                if (res.hasOwnProperty('user_id')) {
+                    alert('Profile updated.');
+                    window.location.href = '/profile';
+                } else {
+                    alert('Error: ' + res.error);
+                }
+
+            }
+        } else {
+            // therapist
+            document.getElementById('therapist_photo').addEventListener('change', function () {
+                document.getElementById('therapist_photo_changed').value = true;
+            });
+
+            // initialize form
+            document.getElementById('therapist_dob').value = profile.dob;
+            setOptionSelected(document.getElementById('therapist_gender'), profile.gender);
+            document.getElementById('therapist_contact_info').value = profile.contact_info;
+            document.getElementById('therapist_office_address').value = profile.office_address;
+            document.getElementById('therapist_meeting_link').value = profile.meeting_link;
+            document.getElementById('therapist_license_info').value = profile.license_info;
+            document.getElementById('therapist_speciality').value = profile.speciality;
+            document.getElementById('therapist_experience').value = profile.experience;
+            document.getElementById('therapist_bio').value = profile.bio;
+
+
+            document.getElementById('therapist_profile').style.display = 'block';
+
+            document.getElementById('form_therapist_profile').onsubmit = function (event) {
+                event.preventDefault();
+                let data = new FormData($('#form_therapist_profile')[0]);
+                let res = edit_user_profile(data);
+
+                if (res.hasOwnProperty('user_id')) {
+                    alert('Profile updated.');
+                    window.location.href = '/profile';
+                } else {
+                    alert('Error: ' + res.error);
+                }
+
+            }
+        }
+    });
+
+</script>
+{% endblock %}
